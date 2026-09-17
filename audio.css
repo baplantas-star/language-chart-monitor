@@ -1,0 +1,8 @@
+.audio-intake{margin-top:16px;padding:12px;background:#f4f8f1;border:1px solid #cbd9c3}
+.audio-intake h3{font-size:16px;margin:0 0 5px}
+.audio-intake p{font-size:13px;line-height:1.45;margin:5px 0;color:#4d5e47}
+.file-label input{font-size:13px;padding:6px}
+.audio-actions{display:flex;gap:8px;align-items:center;margin-top:10px}
+.audio-actions button{font-size:13px;padding:7px 9px}
+#audio-preview{width:100%;margin-top:10px}
+.local-analysis{margin-top:16px;padding:12px;border:1px solid #d6c8ac;background:#fcfaf5}.local-analysis h3{font-size:16px;margin:0 0 5px}.local-analysis>p{font-size:13px;line-height:1.45;margin:5px 0 10px;color:#5e5648}.candidate-list{display:grid;gap:8px;margin-top:12px}.candidate{border-left:3px solid #bd903c;background:#fff;padding:9px;font-size:13px;line-height:1.4}.candidate p{margin:5px 0}.candidate blockquote{margin:7px 0;padding:7px 9px;background:#f7f5f0;border-left:2px solid #d6c8ac;white-space:pre-wrap}.candidate-actions{display:flex;gap:7px}.candidate-actions button{font-size:13px;padding:6px 8px}
