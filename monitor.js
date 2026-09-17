@@ -39,6 +39,18 @@ function load(){
 }
 function fill(){fields.forEach(k=>$(k).value=draft[k]||'');renderObservations();$('save-snapshot').textContent=editing?'Update snapshot':'Save snapshot'}
 function observedKey(dimension,feature){return dimension+'|'+feature}
+function rangeFor(observations){
+ const highest=dimensions.map(dimension=>observations.filter(o=>o.dimension===dimension&&Number.isFinite(Number(o.level))).reduce((max,o)=>Math.max(max,Number(o.level)),0)).filter(Boolean);
+ if(highest.length<2)return null;
+ return {low:Math.min(...highest),high:Math.max(...highest),dimensions:highest.length};
+}
+function renderRange(){
+ const range=rangeFor(draft.observations),target=$('range-summary');
+ if(!range){target.textContent='Record features in at least two language dimensions to generate a suggested range.';return}
+ target.replaceChildren();
+ const strong=document.createElement('strong');strong.textContent=range.low===range.high?'Suggested Level '+range.low:'Suggested Levels '+range.low+'–'+range.high;
+ target.append(strong,document.createTextNode(' · evidence recorded in '+range.dimensions+' of 3 dimensions.'));
+}
 function renderObservations(){
  $('observations').replaceChildren();
  dimensions.forEach(dimension=>{
@@ -56,6 +68,7 @@ function renderObservations(){
    card.append(name,label,remove);section.append(card);
   });$('observations').append(section);
  });
+ renderRange();
  $('next-summary').textContent=draft.next?draft.nextDimension+' · '+draft.next:'Choose one feature from the chart.';
  $('clear-next').hidden=!draft.next;
  document.querySelectorAll('.feature').forEach(b=>{
@@ -93,7 +106,7 @@ function syncPopup(){
 }
 function capture(feature,dimension,evidence){
  const found=draft.observations.find(o=>observedKey(o.dimension,o.feature)===observedKey(dimension,feature));
- if(found)found.evidence=evidence;else draft.observations.push({feature,dimension,evidence});
+ if(found)found.evidence=evidence;else draft.observations.push({feature,dimension,evidence,level:Number(selectedCell.split('-')[0])});
  persist();renderObservations();syncPopup();announce('Observation recorded. Save a snapshot when your review is complete.');
 }
 function openMonitor(){
@@ -112,6 +125,7 @@ function snapshotCard(record){
  const h=document.createElement('h3');h.textContent=record.date+' · '+record.mode;
  const who=document.createElement('p');who.className='student-id';who.textContent=record.student;
  article.append(h,who);
+ const range=rangeFor(record.observations);if(range){const estimate=document.createElement('p');estimate.className='student-id';estimate.textContent=range.low===range.high?'Suggested reference level: '+range.low:'Suggested reference range: '+range.low+'–'+range.high;article.append(estimate)}
  for(const [label,key] of [['Task','task'],['Supports','supports'],['Taught focus','taught']]){
   if(record[key]){const p=document.createElement('p'),b=document.createElement('strong');b.textContent=label+': ';p.append(b,document.createTextNode(record[key]));article.append(p)}
  }
