@@ -6,7 +6,9 @@ Teachers can explore chart descriptors and examples, capture feature-level obser
 
 ## Privacy
 
-This is a fully static browser app. It has no server, account system, analytics, API calls, or environment variables. Drafts and saved snapshots are stored only in the browser on the device being used. Use a student code rather than a full name, and print or export records when a separate copy is needed.
+This is a fully static browser app. It has no server, account system, analytics, student-data API calls, or environment variables. Drafts and saved snapshots are stored only in the browser on the device being used. Use a student code rather than a full name, and print or export records when a separate copy is needed.
+
+The optional speaking-sample workflow accepts a file chosen by the teacher; it does not connect to Canvas. The browser decodes the selected audio and runs Whisper transcription locally in a worker. On first use, the browser downloads and caches speech-model files, but the student audio and resulting transcript are not uploaded. A local, transparent text-pattern check can flag possible language evidence. Teachers must review both the transcript and each suggestion; only accepted evidence is used for the suggested reference range.
 
 ## Run locally
 
